@@ -1,4 +1,5 @@
 const { hooks } = require('@adonisjs/ignitor')
+    const pluralize = require('pluralize')
 
 hooks.after.providersBooted(() =>{
 
@@ -6,10 +7,19 @@ hooks.after.providersBooted(() =>{
 
     const Tag = use('App/Models/Tag')
 
+
     Tag.all()
         .then(tags =>{
             View.global('tags', tags.toJSON())
         })
-        .catch(()=>{})
+        .catch(() => {})
+
+        View.global('paginationArray', nbPages => {
+            return Array.from(new Array(nbPages), (value, index) => index + 1)
+        })
+
+        View.global('pluralize', (singluar, length) => {
+            return pluralize(singluar, length)
+        })
 
 })

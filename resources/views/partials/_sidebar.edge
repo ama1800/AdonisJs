@@ -1,13 +1,16 @@
 
 <div class="my-2">
-    <a href="{{ route('newTag') }}" class="btn btn-primary">New post</a>
+    <a href="{{ route('posts.new') }}" class="btn btn-primary">New post</a>
 </div>
 
 <div class="mt-3">
     <h4 class="my-2">Tags</h4>
     <div class="list-group">
+      <a href="{{ route('home') }}" class="list-group-item list-group-item-action {{ request.match(['/']) ? 'active' : '' }}">All</a>
         @each(tag in tags)
-        <a href="#" class="list-group-item list-group-item-action">{{ tag.name }}</a>          
+        <a href="{{ route('posts.by.tag', {slug: tag.slug}) }}" class="list-group-item list-group-item-action {{ request.match(['/tag/' + tag.slug]) ? 'active' : '' }}">
+          {{ tag.name }}
+        </a>          
         @else
           <span>Vide..!</span>
         @endeach
